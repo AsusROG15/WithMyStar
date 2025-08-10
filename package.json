@@ -1,0 +1,34 @@
+{
+  "name": "withmystar",
+  "version": "0.1.0",
+  "description": "Agentic Widget that gamifies Free LLMs into a planet visually evolving symbolically training locally for users making it in essence a visual training LLM game but is a Widget.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AsusROG15/WithMyStar.git"
+  },
+  "keywords": [
+    "widget",
+    "gamification",
+    "llm",
+    "ai",
+    "android",
+    "kwgt",
+    "tasker",
+    "cyberpunk",
+    "no-code"
+  ],
+  "author": "AsusROG15",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AsusROG15/WithMyStar/issues"
+  },
+  "homepage": "https://github.com/AsusROG15/WithMyStar#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

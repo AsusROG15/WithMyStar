@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "safeMode": false,
+  "planet": {
+    "level": 1,
+    "evolution": 0.15,
+    "biome": "neon-ocean",
+    "cityTiers": 1,
+    "satellites": 0,
+    "weather": "clear",
+    "season": "dawn"
+  },
+  "score": {
+    "daily": 25,
+    "streakDays": 2,
+    "questsCompleted": 3,
+    "benchmark": 0.18
+  },
+  "mood": "growing",
+  "flags": {
+    "reducedMotion": false,
+    "highContrast": false,
+    "soundEnabled": false,
+    "hapticsEnabled": false
+  },
+  "logs": [
+    {
+      "ts": 1704067200,
+      "event": "planet_created",
+      "detail": "New planet initialized",
+      "source": "system"
+    },
+    {
+      "ts": 1704153600,
+      "event": "quest_complete",
+      "detail": "Daily Constellation Check-in",
+      "source": "user"
+    },
+    {
+      "ts": 1704240000,
+      "event": "evolution_milestone",
+      "detail": "Reached 15% evolution",
+      "source": "auto"
+    }
+  ],
+  "lastBackup": 1704240000,
+  "created": 1704067200
+}
