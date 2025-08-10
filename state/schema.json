@@ -1,0 +1,158 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WithMyStar Planet State",
+  "description": "Complete state schema for the WithMyStar planet widget",
+  "type": "object",
+  "required": ["version", "planet", "score"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "description": "State schema version for migration compatibility",
+      "minimum": 1
+    },
+    "safeMode": {
+      "type": "boolean",
+      "description": "Global safe mode toggle",
+      "default": false
+    },
+    "planet": {
+      "type": "object",
+      "required": ["level", "evolution", "biome"],
+      "properties": {
+        "level": {
+          "type": "integer",
+          "description": "Overall planet advancement level",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "evolution": {
+          "type": "number",
+          "description": "Evolution progress (0.0 to 1.0)",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "biome": {
+          "type": "string",
+          "description": "Current planet biome theme",
+          "enum": ["neon-ocean", "cyber-forest", "crystal-desert", "aurora-tundra", "void-nebula"]
+        },
+        "cityTiers": {
+          "type": "integer",
+          "description": "Number of city development tiers",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "satellites": {
+          "type": "integer",
+          "description": "Number of orbital satellites",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "weather": {
+          "type": "string",
+          "description": "Current atmospheric effect",
+          "enum": ["clear", "aurora", "storm", "nebula", "eclipse"]
+        },
+        "season": {
+          "type": "string",
+          "description": "Current planetary season",
+          "enum": ["dawn", "day", "dusk", "night"]
+        }
+      }
+    },
+    "score": {
+      "type": "object",
+      "required": ["daily", "streakDays", "questsCompleted"],
+      "properties": {
+        "daily": {
+          "type": "integer",
+          "description": "Daily progress score",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "streakDays": {
+          "type": "integer",
+          "description": "Current streak of active days",
+          "minimum": 0
+        },
+        "questsCompleted": {
+          "type": "integer",
+          "description": "Total completed quests",
+          "minimum": 0
+        },
+        "benchmark": {
+          "type": "number",
+          "description": "Training benchmark score (0.0 to 1.0)",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      }
+    },
+    "mood": {
+      "type": "string",
+      "description": "Current planet mood affecting visuals",
+      "enum": ["thriving", "calm", "recovering", "growing", "dormant"]
+    },
+    "flags": {
+      "type": "object",
+      "description": "User preference and accessibility flags",
+      "properties": {
+        "reducedMotion": {
+          "type": "boolean",
+          "description": "Disable animations and motion effects",
+          "default": false
+        },
+        "highContrast": {
+          "type": "boolean",
+          "description": "Enable high contrast mode",
+          "default": false
+        },
+        "soundEnabled": {
+          "type": "boolean",
+          "description": "Enable audio feedback",
+          "default": false
+        },
+        "hapticsEnabled": {
+          "type": "boolean",
+          "description": "Enable haptic feedback",
+          "default": false
+        }
+      }
+    },
+    "logs": {
+      "type": "array",
+      "description": "Audit log of state changes",
+      "items": {
+        "type": "object",
+        "required": ["ts", "event"],
+        "properties": {
+          "ts": {
+            "type": "integer",
+            "description": "Unix timestamp of the event"
+          },
+          "event": {
+            "type": "string",
+            "description": "Type of event that occurred"
+          },
+          "detail": {
+            "type": "string",
+            "description": "Additional event details"
+          },
+          "source": {
+            "type": "string",
+            "description": "Source of the change (user, system, auto)",
+            "enum": ["user", "system", "auto", "recovery"]
+          }
+        }
+      }
+    },
+    "lastBackup": {
+      "type": "integer",
+      "description": "Unix timestamp of last backup"
+    },
+    "created": {
+      "type": "integer",
+      "description": "Unix timestamp when planet was created"
+    }
+  }
+}

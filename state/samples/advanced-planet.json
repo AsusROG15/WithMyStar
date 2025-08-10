@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "safeMode": false,
+  "planet": {
+    "level": 7,
+    "evolution": 0.73,
+    "biome": "cyber-forest",
+    "cityTiers": 3,
+    "satellites": 2,
+    "weather": "aurora",
+    "season": "dusk"
+  },
+  "score": {
+    "daily": 87,
+    "streakDays": 12,
+    "questsCompleted": 45,
+    "benchmark": 0.69
+  },
+  "mood": "thriving",
+  "flags": {
+    "reducedMotion": false,
+    "highContrast": true,
+    "soundEnabled": true,
+    "hapticsEnabled": false
+  },
+  "logs": [
+    {
+      "ts": 1704067200,
+      "event": "planet_created",
+      "detail": "New planet initialized",
+      "source": "system"
+    },
+    {
+      "ts": 1705276800,
+      "event": "biome_evolution",
+      "detail": "Evolved to cyber-forest biome",
+      "source": "auto"
+    },
+    {
+      "ts": 1705363200,
+      "event": "satellite_unlocked",
+      "detail": "Second satellite deployed",
+      "source": "auto"
+    },
+    {
+      "ts": 1705449600,
+      "event": "quest_streak",
+      "detail": "12-day quest completion streak",
+      "source": "user"
+    }
+  ],
+  "lastBackup": 1705449600,
+  "created": 1704067200
+}
