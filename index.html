@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WithMyStar Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a2e;
+            color: #eee;
+        }
+        .input-container {
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #16213e;
+            color: #0f4c75;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0f4c75;
+            color: #eee;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #16213e;
+            border-radius: 5px;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>WithMyStar Planet Companion</h1>
+    <p>Test interface for the WithMyStar agentic widget system</p>
+    <div class="input-container">
+        <input type="text" id="queryInput" placeholder="Enter a query...">
+        <button id="submitQuery">Learn!</button>
+    </div>
+    <div id="results">Ready to process your query...</div>
+    <script src="main.js"></script>
+</body>
+</html>
