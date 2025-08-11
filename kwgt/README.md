@@ -76,11 +76,23 @@ Progress: $withmystar_evolution$
 // Planet color based on mood
 Color: $if(withmystar_mood=thriving, #00FFFF, if(withmystar_mood=calm, #0080FF, #004080))$
 
-// City lights visibility
+// City lights visibility using actual icon
+Bitmap: $if(withmystar_city>=1, /storage/emulated/0/WithMyStar/assets/icons/city-light.svg, "")$
 Visibility: $if(withmystar_city>=1, ALWAYS, NEVER)$
+
+// Satellite indicators using actual icon
+Bitmap: $if(withmystar_satellites>=1, /storage/emulated/0/WithMyStar/assets/icons/satellite.svg, "")$
+Count: $withmystar_satellites$
+
+// Weather effects
+Aurora: $if(withmystar_mood=thriving, /storage/emulated/0/WithMyStar/assets/icons/aurora.svg, "")$
+Storm: $if(withmystar_mood=dynamic, /storage/emulated/0/WithMyStar/assets/icons/storm.svg, "")$
 
 // Safe mode opacity reduction
 Opacity: $if(withmystar_safemode=1, 50, 100)$
+
+// High contrast mode
+AppIcon: $if(withmystar_highcontrast=1, /storage/emulated/0/WithMyStar/assets/icons/app-icon-high-contrast.svg, /storage/emulated/0/WithMyStar/assets/icons/app-icon.svg)$
 ```
 
 ## Accessibility Features
@@ -142,20 +154,23 @@ Edit these color values for different themes:
 
 ## Assets Directory
 
-### Icons
-- `satellite.png` - Satellite indicator icons
-- `city-light.png` - City light indicators
-- Weather effect icons
+### Icons (SVG Format)
+- `../assets/icons/app-icon.svg` - Main application icon (192x192 equivalent)
+- `../assets/icons/app-icon-high-contrast.svg` - High contrast version for accessibility
+- `../assets/icons/satellite.svg` - Satellite indicator icons (32x32)
+- `../assets/icons/city-light.svg` - City light indicators (16x16)
+- `../assets/icons/aurora.svg` - Aurora weather effect overlay (48x48)
+- `../assets/icons/storm.svg` - Storm/lightning weather effect (32x32)
 
-### Textures
-- `ocean-texture.png` - Ocean biome overlay
-- `forest-texture.png` - Forest biome overlay
-- Background patterns for different biomes
+### Textures (Future Enhancement)
+- `ocean-texture.png` - Ocean biome overlay (planned)
+- `forest-texture.png` - Forest biome overlay (planned)
+- Background patterns for different biomes (planned)
 
-### Fonts (if custom)
-- Cyberpunk-themed fonts
-- High-contrast accessible fonts
-- Icon fonts for UI elements
+### Fonts (System Default Recommended)
+- System fonts for accessibility compliance
+- Cyberpunk-themed fonts (optional enhancement)
+- Icon fonts for UI elements (if needed)
 
 ## Version History
 

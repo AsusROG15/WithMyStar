@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="192" height="192" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Planet gradient -->
+    <radialGradient id="planetGradient" cx="0.3" cy="0.3" r="0.7">
+      <stop offset="0%" style="stop-color:#00FFFF;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#0080FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#001122;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Ring gradient -->
+    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00FFFF;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#FF00FF;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#00FFFF;stop-opacity:0.8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer glow ring -->
+  <circle cx="96" cy="96" r="88" fill="none" stroke="url(#ringGradient)" stroke-width="4" filter="url(#glow)" opacity="0.7"/>
+  
+  <!-- Main planet -->
+  <circle cx="96" cy="96" r="72" fill="url(#planetGradient)" filter="url(#glow)"/>
+  
+  <!-- Evolution ring (inner) -->
+  <circle cx="96" cy="96" r="78" fill="none" stroke="#00FFFF" stroke-width="3" opacity="0.9"/>
+  
+  <!-- City lights (small dots) -->
+  <circle cx="120" cy="80" r="2" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="75" cy="110" r="1.5" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="110" cy="115" r="1" fill="#FFFFFF" opacity="0.7"/>
+  <circle cx="85" cy="75" r="1.5" fill="#FFFFFF" opacity="0.9"/>
+  
+  <!-- Satellite indicator -->
+  <g transform="translate(140,60) rotate(45)">
+    <rect x="-3" y="-1" width="6" height="2" fill="#00FFFF"/>
+    <rect x="-1" y="-3" width="2" height="6" fill="#00FFFF"/>
+  </g>
+</svg>
