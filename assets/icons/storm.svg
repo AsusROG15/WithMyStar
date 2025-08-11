@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="stormGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#00FFFF;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="stormGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Lightning bolt -->
+  <path d="M 16 4 L 12 16 L 18 16 L 16 28 L 20 16 L 14 16 Z" fill="url(#stormGradient)" filter="url(#stormGlow)"/>
+  
+  <!-- Energy particles -->
+  <circle cx="8" cy="12" r="1" fill="#00FFFF" opacity="0.8"/>
+  <circle cx="24" cy="8" r="0.5" fill="#FFFFFF" opacity="0.9"/>
+  <circle cx="6" cy="24" r="0.5" fill="#00FFFF" opacity="0.7"/>
+  <circle cx="26" cy="20" r="1" fill="#FFFFFF" opacity="0.6"/>
+</svg>

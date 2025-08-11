@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="192" height="192" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+  <!-- High contrast version of app icon for accessibility -->
+  <defs>
+    <!-- High contrast gradient -->
+    <radialGradient id="planetGradientHC" cx="0.3" cy="0.3" r="0.7">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#CCCCCC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Outer ring -->
+  <circle cx="96" cy="96" r="88" fill="none" stroke="#FFFFFF" stroke-width="6"/>
+  
+  <!-- Main planet -->
+  <circle cx="96" cy="96" r="72" fill="url(#planetGradientHC)" stroke="#FFFFFF" stroke-width="2"/>
+  
+  <!-- Evolution ring (inner) -->
+  <circle cx="96" cy="96" r="78" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+  
+  <!-- City lights (high contrast) -->
+  <circle cx="120" cy="80" r="3" fill="#FFFFFF"/>
+  <circle cx="75" cy="110" r="2" fill="#FFFFFF"/>
+  <circle cx="110" cy="115" r="2" fill="#FFFFFF"/>
+  <circle cx="85" cy="75" r="2" fill="#FFFFFF"/>
+  
+  <!-- Satellite indicator (high contrast) -->
+  <g transform="translate(140,60) rotate(45)">
+    <rect x="-4" y="-2" width="8" height="4" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+    <rect x="-2" y="-4" width="4" height="8" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+  </g>
+</svg>

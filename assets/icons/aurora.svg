@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="auroraGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00FFFF;stop-opacity:0.8" />
+      <stop offset="25%" style="stop-color:#00FF80;stop-opacity:0.6" />
+      <stop offset="50%" style="stop-color:#8000FF;stop-opacity:0.7" />
+      <stop offset="75%" style="stop-color:#FF00FF;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#00FFFF;stop-opacity:0.8" />
+    </linearGradient>
+    
+    <filter id="auroraGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Aurora arc -->
+  <path d="M 8 24 Q 24 8 40 24" stroke="url(#auroraGradient)" stroke-width="3" fill="none" filter="url(#auroraGlow)"/>
+  <path d="M 6 28 Q 24 12 42 28" stroke="url(#auroraGradient)" stroke-width="2" fill="none" filter="url(#auroraGlow)" opacity="0.7"/>
+  <path d="M 10 20 Q 24 4 38 20" stroke="url(#auroraGradient)" stroke-width="2" fill="none" filter="url(#auroraGlow)" opacity="0.5"/>
+</svg>
