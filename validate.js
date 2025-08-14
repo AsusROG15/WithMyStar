@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 
 // Simple validation script for main.js functionality
 const fs = require('fs');
