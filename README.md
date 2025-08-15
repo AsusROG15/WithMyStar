@@ -1,5 +1,7 @@
 https://notebooklm.google.com/notebook/09bd6023-14b6-4dc6-9862-2c5fecb0e13b/audio
 
+https://notebooklm.google.com/notebook/d63790e3-fe62-4dcf-95f5-f186f9ba0c71/audio
+
 # WithMyStar
 STILL IN DEVELOPMENT:Agentic Widget that gamifies Free LLMs into a planet visually evolving symbolically training locally for users making it in essence a visual training LLM game but is a Widget.
 WithMyStar: A realistic, no‑code/low‑code path to a living planet companion.
