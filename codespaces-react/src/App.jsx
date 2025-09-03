@@ -23,21 +23,23 @@
   const [privacyMode, setPrivacyMode] = useState(false);
   const [autoSave, setAutoSave] = useState(true);
 
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
 import GearIcon from './GearIcon.jsx';
 
 function Planet() {
   const mesh = useRef();
+  // Removed useFrame for now to simplify
   return (
-    <mesh ref={mesh} position={[0, 0, 0]} castShadow receiveShadow>
-      <sphereGeometry args={[1.5, 64, 64]} />
-      <meshStandardMaterial color="#00fff7" emissive="#ff00c8" emissiveIntensity={0.5} metalness={0.7} roughness={0.2} />
+    <mesh ref={mesh}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshBasicMaterial color="hotpink" />
     </mesh>
   );
 }
 
 function App() {
+  console.log("App component rendered!");
   const [showSettings, setShowSettings] = useState(false);
   const [selectedFont, setSelectedFont] = useState('Orbitron');
   // Accessibility settings
@@ -387,9 +389,7 @@ function App() {
       )}
       {/* 3D Planet WithMyStar */}
       <div style={{ width: '400px', height: '400px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-        <Canvas camera={{ position: [0, 0, 5], fov: 60 }} shadows>
-          <ambientLight intensity={0.7} />
-          <pointLight position={[5, 5, 5]} intensity={1.2} color="#ff00c8" />
+        <Canvas>
           <Planet />
         </Canvas>
         {/* Overlay logo */}
