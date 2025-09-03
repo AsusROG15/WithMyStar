@@ -1,7 +1,7 @@
 CREATE TABLE contributors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    email TEXT UNIQUE,
+    email TEXT UNIQUE, -- SECURITY: Sensitive data. Ensure proper access control and consider encryption.
     glyph TEXT
 );
 

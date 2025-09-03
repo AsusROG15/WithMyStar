@@ -27,6 +27,10 @@ const initDB = () => {
 
 // Insert a log entry
 function addLog({ timestamp, sender, userName, message, error, autoReply, agentType }) {
+  // SECURITY: Ensure 'userName' is anonymized and 'message' content is
+  // filtered/redacted for sensitive information before storage,
+  // as per SECURITY.md policy "Chat relay logs are anonymized" and
+  // "No sensitive user data is stored permanently."
   db.run(
     `INSERT INTO logs (timestamp, sender, userName, message, error, autoReply, agentType) VALUES (?, ?, ?, ?, ?, ?, ?)`,
     [timestamp, sender, userName, message, error, autoReply, agentType]
