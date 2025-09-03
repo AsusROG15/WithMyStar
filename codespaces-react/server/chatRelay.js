@@ -2,7 +2,7 @@
 
 // Express route to relay messages to Google Chat webhook, with AI agent and org management
 import express from 'express';
-import fetch from 'node-fetch';
+// No import needed for fetch in Node.js 18+
 
 const router = express.Router();
 

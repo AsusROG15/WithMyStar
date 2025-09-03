@@ -3,8 +3,8 @@
 // This function will be triggered when the "Learn!" button is clicked.
 // It sends the user's input to the Tasker system for processing.
 function submitQuery() {
-  const query = document.getElementById("queryInput").value;
-  const errorMessageElement = document.getElementById("queryError");
+  const query = document.querySelector('[data-js="queryInput"]').value;
+  const errorMessageElement = document.querySelector('[data-js="queryError"]');
   if (query.trim() === "") {
     if (errorMessageElement) {
       errorMessageElement.textContent = "Please enter a query.";
