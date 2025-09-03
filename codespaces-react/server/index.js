@@ -9,8 +9,6 @@ import morgan from 'morgan'; // Import morgan
 import { v4 as uuidv4 } from 'uuid';
 import chatRelay from './chatRelay.js';
 
-console.log("Backend server is starting up!"); // Added for debugging
-
 const app = express();
 app.use(morgan('combined')); // Use morgan for request logging
 app.use(helmet()); // Use helmet for security headers
@@ -29,7 +27,6 @@ app.use(bodyParser.json({ limit: '10mb' }));
 
 // Health check endpoint for CI/CD
 app.get('/api/health', (req, res) => {
-  console.log("Health check endpoint hit!"); // Added for debugging
   res.json({
     status: 'healthy',
     service: 'WithMyStar Backend',
@@ -41,7 +38,6 @@ app.get('/api/health', (req, res) => {
 // Vision API placeholder
 app.post('/api/vision', async (req, res) => {
   const { imageBase64 } = req.body;
-  console.log("Received image data:", imageBase64 ? "present" : "missing"); // Added for debugging
   if (!imageBase64) {
     return res.status(400).json({ error: 'Missing imageBase64' });
   }
@@ -58,7 +54,6 @@ app.use('/api/chat', chatRelay);
 
 // Centralized error handling middleware
 app.use((err, req, res, next) => {
-  console.log("An error occurred:", err.message); // Added for debugging
   console.error(err.stack); // Log the error stack for debugging
   res.status(500).send('Something broke!'); // Generic error message for client
 });
