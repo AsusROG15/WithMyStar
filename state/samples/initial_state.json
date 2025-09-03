@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "safeMode": false,
+  "planet": {
+    "level": 0,
+    "evolution": 0.0,
+    "biome": "neon-ocean",
+    "cityTiers": 0,
+    "satellites": 0,
+    "weather": "clear",
+    "season": "dawn"
+  },
+  "score": {
+    "daily": 0,
+    "streakDays": 0,
+    "questsCompleted": 0,
+    "benchmark": 0.0
+  },
+  "mood": "calm",
+  "flags": {
+    "reducedMotion": false,
+    "highContrast": false
+  },
+  "logs": []
+}

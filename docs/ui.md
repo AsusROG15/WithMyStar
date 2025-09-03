@@ -33,7 +33,7 @@ WithMyStar embraces a **cyberpunk visual language** that feels futuristic yet ac
 - **Accent**: Magenta `#FF00FF` - Streak indicators, highlights
 - **Background**: Deep Navy `#001122` - Space background, containers
 
-#### Mood-Based Variations (These CSS-like variables are conceptual guidelines for KWGT theming or for use in web-based UI components.)
+#### Mood-Based Variations (These CSS-like variables are conceptual guidelines for React Native theming or for use in web-based UI components.)
 ```css
 /* Thriving State */
 --primary: #00FFFF;    /* Bright cyan */
@@ -136,7 +136,7 @@ WithMyStar embraces a **cyberpunk visual language** that feels futuristic yet ac
 - **Shadow**: Subtle drop shadow for readability
 - **Outline**: Optional stroke for visibility over varied backgrounds
 
-#### Glowing Text Effects (This CSS example can be simulated in KWGT using multiple text layers with blur effects.)
+#### Glowing Text Effects (This CSS example can be simulated in a React Native application using appropriate styling.)
 ```css
 /* Cyberpunk glow effect */
 text-shadow: 
@@ -155,7 +155,7 @@ text-shadow:
 - **Border**: Optional thin border in accent color
 - **Shadow**: Subtle drop shadow for depth
 
-#### Planet States (These CSS examples are conceptual guidelines for KWGT theming or for use in web-based UI components.)
+#### Planet States (These CSS examples are conceptual guidelines for React Native styling.)
 ```css
 /* Normal state */
 border-radius: 50%;
@@ -338,22 +338,7 @@ box-shadow: none;
 
 ### Implementation Guidelines
 
-#### KWGT Formulas for Theming
-```
-// Dynamic color based on mood and biome
-$if(withmystar_biome=neon-ocean,
-  if(withmystar_mood=thriving, #00FFFF, #0080FF),
-  if(withmystar_biome=cyber-forest, #00FF80, #008040)
-)$
 
-// Conditional visibility
-$if(withmystar_safemode=1, NEVER, 
-  if(withmystar_city>=1, ALWAYS, NEVER)
-)$
-
-// Responsive sizing
-$if(wi<200, 10, if(wi<300, 12, 14))$sp
-```
 
 ## Brand Guidelines
 

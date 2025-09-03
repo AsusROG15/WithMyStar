@@ -1,0 +1,5 @@
+[
+  {"cmd": "set", "path": "planet.evolution", "value": 0.70},
+  {"cmd": "toggle", "path": "safeMode"},
+  {"cmd": "log", "event": "manual_command", "detail": "Test command from CLI"}
+]

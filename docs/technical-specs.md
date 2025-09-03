@@ -5,32 +5,32 @@ This document provides detailed technical specifications for the WithMyStar proj
 ## System Architecture
 
 ### Overview
-WithMyStar uses a hybrid no-code/low-code architecture combining Android apps for implementation with standard JSON for state management and optional web technologies for advanced features.
+WithMyStar uses a custom Android application built with React Native for the UI, integrated with a local service/daemon for business logic and state management. Standard JSON is used for data persistence.
 
 ```mermaid
 graph TD
-    KWGT[KWGT Widget (UI Layer)] <--> Tasker[Tasker (Logic)]
-    Tasker <--> StateJSON[State JSON (Data)]
-    UserInput[User Input (Touch/Voice)] --> KWGT
-    Commands[Commands (JSON)] --> Tasker
+    RN[React Native App (UI Layer)] <--> LS[Local Service/Daemon (Logic)]
+    LS <--> StateJSON[State JSON (Data)]
+    UserInput[User Input (Touch/Voice)] --> RN
+    Commands[Commands (JSON)] --> LS
     StateJSON --> Backups[Backups (Cloud/Local)]
 ```
 
 ### Component Details
 
-#### KWGT Widget (Presentation Layer)
-- **Purpose**: Visual representation of planet state
-- **Technology**: KWGT (Kustom Widget Maker)
-- **Data Source**: Tasker global variables
-- **Update Mechanism**: Variable change triggers
-- **Rendering**: Real-time based on state variables
+#### React Native Application (Presentation Layer)
+- **Purpose**: Visual representation of planet state and user interaction
+- **Technology**: React Native
+- **Data Source**: Local Service/Daemon via IPC or shared storage
+- **Update Mechanism**: State changes pushed from Local Service/Daemon
+- **Rendering**: Real-time based on application state
 
-#### Tasker (Business Logic Layer)
+#### Local Service/Daemon (Business Logic Layer)
 - **Purpose**: State management, automation, and safety features
-- **Technology**: Tasker automation app
+- **Technology**: Node.js/Python (or similar, running as a background service)
 - **Data Storage**: JSON files on device storage
-- **Integration**: KWGT variables, Android intents, file I/O
-- **Execution**: Event-driven profiles and tasks
+- **Integration**: Inter-process communication (IPC) with React Native app, file I/O
+- **Execution**: Event-driven or periodic tasks
 
 #### State Management (Data Layer)
 - **Format**: JSON following defined schema
@@ -85,32 +85,7 @@ interface ScoreState {
 }
 ```
 
-## Variable Mapping
 
-### Tasker Global Variables
-| Variable Name | Type | Range | Purpose |
-|---------------|------|-------|---------|
-| `%WITHMYSTAR_EVOLUTION` | Integer | 0-100 | Planet evolution percentage |
-| `%WITHMYSTAR_LEVEL` | Integer | 0-100 | Planet level |
-| `%WITHMYSTAR_STREAK` | Integer | 0+ | Daily streak counter |
-| `%WITHMYSTAR_CITY` | Integer | 0-5 | City tier level |
-| `%WITHMYSTAR_SATELLITES` | Integer | 0-4 | Satellite count |
-| `%WITHMYSTAR_MOOD` | String | enum | Current mood state |
-| `%WITHMYSTAR_BIOME` | String | enum | Current biome |
-| `%WITHMYSTAR_WEATHER` | String | enum | Weather effect |
-| `%WITHMYSTAR_SEASON` | String | enum | Time of day |
-| `%WITHMYSTAR_SAFEMODE` | Boolean | 0/1 | Safe mode status |
-| `%WITHMYSTAR_LABEL` | String | text | Display label |
-
-### KWGT Formula Integration
-```
-Evolution Ring Progress: $withmystar_evolution$
-Streak Ring Progress: $withmystar_streak*10$ // Multiplied by 10 to scale streak days to a 0-100 range for the progress ring
-Planet Color: $if(withmystar_mood=thriving, #00FFFF, #0080FF)$
-City Visibility: $withmystar_city>=1$
-Label Text: $withmystar_label$
-Safe Mode Opacity: $if(withmystar_safemode=1, 50, 100)$
-```
 
 ## Command Protocol
 
@@ -144,8 +119,8 @@ Safe Mode Opacity: $if(withmystar_safemode=1, 50, 100)$
 3. **Execute**: Command applied to state
 4. **Log**: Action recorded in audit log
 5. **Save**: Updated state written to disk
-6. **Update**: KWGT variables refreshed
-7. **Clear**: Command file emptied
+6. **Update**: React Native application state refreshed
+7. **Clear**: Command file emptied (or processed command removed)
 
 ## File System Structure
 
@@ -161,15 +136,7 @@ Safe Mode Opacity: $if(withmystar_safemode=1, 50, 100)$
 ├── backups/
 │   ├── state-YYYY-MM-DD.json
 │   └── auto-backup-*.json
-├── tasker/
-│   ├── profiles.xml         // Tasker profiles export
-│   ├── tasks.xml           // Tasker tasks export
-│   └── variables.txt       // Variable documentation
-├── kwgt/
-│   ├── planet_widget.kwgt  // Widget export
-│   └── assets/             // Visual assets
-│       ├── icons/
-│       └── textures/
+├── codespaces-react/        // React Native application source
 ├── logs/
 │   └── debug.txt           // Debug information
 └── commands.json           // Active command (temp, cleared after processing)
@@ -183,22 +150,21 @@ Safe Mode Opacity: $if(withmystar_safemode=1, 50, 100)$
 
 ## Integration Patterns
 
-### KWGT ↔ Tasker Communication
+### React Native ↔ Local Service Communication
 ```mermaid
 sequenceDiagram
     participant U as User
-    participant K as KWGT
-    participant T as Tasker
+    participant RN as React Native App
+    participant LS as Local Service/Daemon
     participant F as Files
     
-    U->>K: Touch widget
-    K->>T: Send intent with action
-    T->>F: Read current state
-    T->>T: Process action
-    T->>F: Write updated state
-    T->>T: Update variables
-    T->>K: Variables changed signal
-    K->>K: Refresh display
+    U->>RN: Interact with UI
+    RN->>LS: Send command/request (IPC)
+    LS->>F: Read current state
+    LS->>LS: Process action
+    LS->>F: Write updated state
+    LS->>RN: Notify state change (IPC)
+    RN->>RN: Refresh display
 ```
 
 ### State Update Flow
@@ -207,7 +173,7 @@ sequenceDiagram
 3. **Validate**: State checked against schema
 4. **Modify**: Changes applied with logging
 5. **Save**: Updated state written atomically
-6. **Propagate**: Variables updated for KWGT
+6. **Propagate**: Application state updated for UI refresh
 7. **Backup**: Automatic backup if significant change
 
 ### Error Handling
@@ -227,15 +193,15 @@ sequenceDiagram
 
 ### Resource Usage
 - **Storage**: < 10MB total (including backups)
-- **RAM**: < 50MB (KWGT + Tasker combined)
-- **CPU**: Minimal (event-driven updates only)
-- **Battery**: < 1% daily (optimized profiles)
+- **RAM**: < 100MB (React Native app + local service)
+- **CPU**: Moderate (event-driven updates, UI rendering)
+- **Battery**: Optimized for background operation
 
 ### Scalability Limits
 - **Maximum logs**: 1000 entries (auto-pruned)
 - **Maximum backups**: 30 days retention
 - **State file size**: < 1MB
-- **Widget complexity**: Limited by KWGT constraints
+- **Widget complexity**: Limited by device resources and React Native performance
 
 ## Security Model
 
@@ -269,8 +235,8 @@ sequenceDiagram
 
 ### Compatibility Considerations
 - **Android versions**: 7.0+ (API level 24+)
-- **KWGT versions**: 3.50+ (for full feature set)
-- **Tasker versions**: 5.0+ (for JSON support)
+- **React Native versions**: (Specify compatible versions as development progresses)
+- **Node.js versions**: (Specify compatible versions as development progresses)
 - **Storage requirements**: 50MB+ free space
 
 This specification is versioned and will be updated as the project evolves. All changes will maintain backward compatibility with existing installations.

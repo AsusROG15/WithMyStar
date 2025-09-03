@@ -12,7 +12,7 @@
 **WithMyStar** is a **gamified, agentic widget**: a neon-punk planet that evolves as you interact with it.  
 It’s a **visual training companion** — a small world that reflects your growth, resilience, and rituals.  
 
-We start with **no-code/low-code tools on Android** (KWGT + Tasker), then keep the door open for **future native polish**.  
+We will build a **custom Android App Widget** embedding a React web application via WebView, providing full control over the user experience and ensuring a free and open-source development path.  
 
 ---
 
@@ -27,17 +27,18 @@ We start with **no-code/low-code tools on Android** (KWGT + Tasker), then keep t
   - Optional later: tie into AI model responses (cloud or on-device)  
 
 - **Why this path:**  
-  Ship something alive today with **KWGT + Tasker**, and optionally expand later to **Flutter/native**.  
+  Ship something alive today with a **custom Android App Widget embedding a React web application via WebView**, ensuring a free and flexible development path.  
 
 ---
 
-## Starter Stack (Android No-/Low-Code)  
+## Starter Stack  
 
-- **KWGT (Kustom Widget Maker):** visuals (planet, rings, lights, labels)  
-- **Tasker:** state handling, automations, backups  
-- **Optional helpers:**  
-  - Vector assets / neon icon packs  
-  - JSON file (single source of truth)  
+- **React Web Application (UI)**: For building the visual planet and interactive elements using React and React Three Fiber.
+- **Android App Widget (Container)**: For embedding the React web application via a WebView on the Android home screen.
+- **Local Service/Daemon:** For state handling, automations, and backups (potentially using existing `daemon/` or `codespaces-react/server/` components).
+- **Optional helpers:**
+  - Vector assets / neon icon packs
+  - JSON file (single source of truth)
   - Cloud backup (Google Drive/Dropbox)  
 
 ---
@@ -47,13 +48,13 @@ We start with **no-code/low-code tools on Android** (KWGT + Tasker), then keep t
 | Phase | Goal | Tools | Output | Time |
 |-------|------|-------|--------|------|
 | 0 | Repo + safety rails | GitHub, Notion | PROMPT.md, safety checklist | 1–2 hrs |
-| 1 | Static planet widget | KWGT | Planet widget (manual %) | 1–2 hrs |
-| 2 | State + progress loop | Tasker + KWGT | Auto updates, quests | 2–4 hrs |
-| 3 | Debug + recovery kit | Tasker | Reset, backups, safe mode | 1–2 hrs |
-| 4 | Civilization layers | KWGT + Tasker | Cities, satellites, seasons | 2–4 hrs |
-| 5 | Agentic automations | Tasker | Self-diagnose, self-heal | 2–4 hrs |
+| 1 | Static planet widget | React Web App + Android App Widget | Android App Widget (manual %) | 1–2 hrs |
+| 2 | State + progress loop | React Web App + Android App Widget + Local Service | Auto updates, quests | 2–4 hrs |
+| 3 | Debug + recovery kit | React Web App + Android App Widget + Local Service | Reset, backups, safe mode | 1–2 hrs |
+| 4 | Civilization layers | React Web App + Android App Widget | Cities, satellites, seasons | 2–4 hrs |
+| 5 | Agentic automations | React Web App + Android App Widget + Local Service | Self-diagnose, self-heal | 2–4 hrs |
 | 6 | Optional LLM hook | Remote or on-device | Scored prompts/quests | 4–8 hrs |
-| 7 | Polish + vibes | KWGT assets + sound | Themes, haptics, accessibility | 2–4 hrs |  
+| 7 | Polish + vibes | React Web App assets + sound | Themes, haptics, accessibility | 2–4 hrs |  
 
 ---
 
@@ -65,8 +66,7 @@ We start with **no-code/low-code tools on Android** (KWGT + Tasker), then keep t
 /PROMPT.md        → reference prompt + agreements
 /docs/            → vision.md, safety.md, debug.md, ui.md
 /state/           → schema.json + sample snapshots
-/tasker/          → profiles.xml, tasks.xml
-/kwgt/            → planet\_widget.kwgt + assets
+/codespaces-react/  → React Web Application source
 /backups/         → auto JSON backups
 
 ````
@@ -143,14 +143,14 @@ Supported commands:
 
 ---
 
-## Planet UI (KWGT)
+## Planet UI (React Web App in WebView)
 
-* Base planet: neon gradient sphere
-* Progress rings: inner = evolution, outer = streak
-* City lights: dots that scale with cityTiers
-* Satellites: glyphs appearing at milestones (0.25, 0.5, 0.75, 1.0)
-* Weather/season: aurora arcs, dusk bands
-* Cyberpunk theme: neon cyan/magenta, dark violets
+*   Base planet: neon gradient sphere
+*   Progress rings: inner = evolution, outer = streak
+*   City lights: dots that scale with cityTiers
+*   Satellites: glyphs appearing at milestones (0.25, 0.5, 0.75, 1.0)
+*   Weather/season: aurora arcs, dusk bands
+*   Cyberpunk theme: neon cyan/magenta, dark violets
 
 Accessibility: text labels, reduced motion, high contrast toggle.
 
@@ -192,13 +192,13 @@ Accessibility: text labels, reduced motion, high contrast toggle.
 
 ## First 90 Minutes
 
-1. Create GitHub repo + add this README + PROMPT.md
-2. Install KWGT (with Pro key) + Tasker
-3. Place a 2×2 widget and build static planet (circle + rings + label)
-4. Add Tasker variables (evolution, streak, mood)
-5. Add Safe Mode quick tile → confirm it hides effects
+1.  Create GitHub repo + add this README + PROMPT.md
+2.  Set up your React Native development environment (Node.js, npm/yarn, Android Studio, etc.).
+3.  Navigate to the `codespaces-react/` directory.
+4.  Install dependencies: `npm install` or `yarn install`.
+5.  Run the Android application: `npm run android` or `yarn android`.
 
-✅ By the end, you’ll have a **breathing neon planet** on your home screen.
+✅ By the end, you’ll have a **basic React Native application running** on your Android device or emulator, ready to be developed into the breathing neon planet.
 
 ```
 ```
