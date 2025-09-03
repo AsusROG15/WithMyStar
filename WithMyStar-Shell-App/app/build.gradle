@@ -119,9 +119,8 @@ android {
 
     testOptions {
         unitTests {
-            includeAndroidResources = true
+            includeAndroidResources true
             jacoco {
-                includeNoLocationClasses = true
             }
         }
     }
