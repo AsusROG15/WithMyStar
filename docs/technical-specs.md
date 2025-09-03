@@ -5,31 +5,31 @@ This document provides detailed technical specifications for the WithMyStar proj
 ## System Architecture
 
 ### Overview
-WithMyStar uses a custom Android application built with React Native for the UI, integrated with a local service/daemon for business logic and state management. Standard JSON is used for data persistence.
+WithMyStar uses a React web application for the UI, embedded within a custom Android App Widget via WebView. A local service/daemon handles business logic and state management. Standard JSON is used for data persistence.
 
 ```mermaid
 graph TD
-    RN[React Native App (UI Layer)] <--> LS[Local Service/Daemon (Logic)]
-    LS <--> StateJSON[State JSON (Data)]
-    UserInput[User Input (Touch/Voice)] --> RN
+    RWA[React Web App (UI Layer)] <--> AW[Android App Widget (Container)]
+    AW <--> LS[Local Service/Daemon (Logic)]
+    UserInput[User Input (Touch/Voice)] --> RWA
     Commands[Commands (JSON)] --> LS
     StateJSON --> Backups[Backups (Cloud/Local)]
 ```
 
 ### Component Details
 
-#### React Native Application (Presentation Layer)
+#### React Web Application (Presentation Layer)
 - **Purpose**: Visual representation of planet state and user interaction
-- **Technology**: React Native
-- **Data Source**: Local Service/Daemon via IPC or shared storage
-- **Update Mechanism**: State changes pushed from Local Service/Daemon
-- **Rendering**: Real-time based on application state
+- **Technology**: React, React Three Fiber (running in WebView)
+- **Data Source**: Android App Widget via JavaScript Interface
+- **Update Mechanism**: State changes pushed from Android App Widget
+- **Rendering**: Real-time based on application state within WebView
 
 #### Local Service/Daemon (Business Logic Layer)
 - **Purpose**: State management, automation, and safety features
 - **Technology**: Node.js/Python (or similar, running as a background service)
 - **Data Storage**: JSON files on device storage
-- **Integration**: Inter-process communication (IPC) with React Native app, file I/O
+- **Integration**: Inter-process communication (IPC) with Android App Widget, file I/O
 - **Execution**: Event-driven or periodic tasks
 
 #### State Management (Data Layer)
@@ -119,7 +119,7 @@ interface ScoreState {
 3. **Execute**: Command applied to state
 4. **Log**: Action recorded in audit log
 5. **Save**: Updated state written to disk
-6. **Update**: React Native application state refreshed
+6. **Update**: React web application state refreshed via WebView JavaScript interface
 7. **Clear**: Command file emptied (or processed command removed)
 
 ## File System Structure
@@ -136,7 +136,7 @@ interface ScoreState {
 ├── backups/
 │   ├── state-YYYY-MM-DD.json
 │   └── auto-backup-*.json
-├── codespaces-react/        // React Native application source
+├── codespaces-react/        // React Web Application source
 ├── logs/
 │   └── debug.txt           // Debug information
 └── commands.json           // Active command (temp, cleared after processing)
@@ -150,21 +150,24 @@ interface ScoreState {
 
 ## Integration Patterns
 
-### React Native ↔ Local Service Communication
+### React Web App (in WebView) ↔ Android App Widget ↔ Local Service Communication
 ```mermaid
 sequenceDiagram
     participant U as User
-    participant RN as React Native App
+    participant RWA as React Web App
+    participant AW as Android App Widget
     participant LS as Local Service/Daemon
     participant F as Files
     
-    U->>RN: Interact with UI
-    RN->>LS: Send command/request (IPC)
+    U->>RWA: Interact with UI
+    RWA->>AW: Send command/request (JavaScript Interface)
+    AW->>LS: Send command/request (IPC)
     LS->>F: Read current state
     LS->>LS: Process action
     LS->>F: Write updated state
-    LS->>RN: Notify state change (IPC)
-    RN->>RN: Refresh display
+    LS->>AW: Notify state change (IPC)
+    AW->>RWA: Update UI (JavaScript Interface)
+    RWA->>RWA: Refresh display
 ```
 
 ### State Update Flow
@@ -173,7 +176,7 @@ sequenceDiagram
 3. **Validate**: State checked against schema
 4. **Modify**: Changes applied with logging
 5. **Save**: Updated state written atomically
-6. **Propagate**: Application state updated for UI refresh
+6. **Propagate**: React web application state updated via WebView JavaScript interface for UI refresh
 7. **Backup**: Automatic backup if significant change
 
 ### Error Handling
@@ -193,15 +196,15 @@ sequenceDiagram
 
 ### Resource Usage
 - **Storage**: < 10MB total (including backups)
-- **RAM**: < 100MB (React Native app + local service)
-- **CPU**: Moderate (event-driven updates, UI rendering)
-- **Battery**: Optimized for background operation
+- **RAM**: < 150MB (WebView, React app, local service)
+- **CPU**: Moderate (WebView rendering, JavaScript execution, local service)
+- **Battery**: Optimized for background operation, but WebView can be resource-intensive
 
 ### Scalability Limits
 - **Maximum logs**: 1000 entries (auto-pruned)
 - **Maximum backups**: 30 days retention
 - **State file size**: < 1MB
-- **Widget complexity**: Limited by device resources and React Native performance
+- **Widget complexity**: Limited by WebView performance and device resources
 
 ## Security Model
 
@@ -235,8 +238,8 @@ sequenceDiagram
 
 ### Compatibility Considerations
 - **Android versions**: 7.0+ (API level 24+)
-- **React Native versions**: (Specify compatible versions as development progresses)
-- **Node.js versions**: (Specify compatible versions as development progresses)
+- **WebView versions**: Latest Android System WebView recommended
+- **Node.js versions**: (Specify compatible versions for React app development)
 - **Storage requirements**: 50MB+ free space
 
 This specification is versioned and will be updated as the project evolves. All changes will maintain backward compatibility with existing installations.

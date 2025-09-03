@@ -193,12 +193,14 @@ Accessibility: text labels, reduced motion, high contrast toggle.
 ## First 90 Minutes
 
 1.  Create GitHub repo + add this README + PROMPT.md
-2.  Set up your React Native development environment (Node.js, npm/yarn, Android Studio, etc.).
-3.  Navigate to the `codespaces-react/` directory.
-4.  Install dependencies: `npm install` or `yarn install`.
-5.  Run the Android application: `npm run android` or `yarn android`.
+2.  Set up your Android development environment (Android Studio, SDK, etc.).
+3.  Navigate to the `codespaces-react/` directory and install dependencies: `npm install` or `yarn install`.
+4.  Start the React web application's development server: `npm start` or `yarn start`.
+5.  Create a new Android App Widget project (or integrate into `WithMyStar-Shell-App/`).
+6.  Embed a WebView in the App Widget layout and configure it to load the local React app's URL.
+7.  Run the Android App Widget on your device or emulator.
 
-✅ By the end, you’ll have a **basic React Native application running** on your Android device or emulator, ready to be developed into the breathing neon planet.
+✅ By the end, you’ll have a **basic Android App Widget displaying the React web application** on your home screen, ready for further integration and development.
 
 ```
 ```
