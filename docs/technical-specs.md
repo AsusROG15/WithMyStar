@@ -7,18 +7,13 @@ This document provides detailed technical specifications for the WithMyStar proj
 ### Overview
 WithMyStar uses a hybrid no-code/low-code architecture combining Android apps for implementation with standard JSON for state management and optional web technologies for advanced features.
 
-```
-┌─────────────────┐    ┌──────────────┐    ┌─────────────────┐
-│   KWGT Widget   │◄───┤    Tasker    │◄───┤   State JSON    │
-│   (UI Layer)    │    │  (Logic)     │    │   (Data)        │
-└─────────────────┘    └──────────────┘    └─────────────────┘
-         │                       │                    │
-         │                       │                    │
-         ▼                       ▼                    ▼
-┌─────────────────┐    ┌──────────────┐    ┌─────────────────┐
-│   User Input    │    │   Commands   │    │    Backups      │
-│   (Touch/Voice) │    │   (JSON)     │    │   (Cloud/Local) │
-└─────────────────┘    └──────────────┘    └─────────────────┘
+```mermaid
+graph TD
+    KWGT[KWGT Widget (UI Layer)] <--> Tasker[Tasker (Logic)]
+    Tasker <--> StateJSON[State JSON (Data)]
+    UserInput[User Input (Touch/Voice)] --> KWGT
+    Commands[Commands (JSON)] --> Tasker
+    StateJSON --> Backups[Backups (Cloud/Local)]
 ```
 
 ### Component Details
@@ -47,17 +42,19 @@ WithMyStar uses a hybrid no-code/low-code architecture combining Android apps fo
 ## State Schema Specification
 
 ### Core Structure
-```json
-{
-  "version": 1,           // Schema version for migrations
-  "safeMode": false,      // Global safety toggle
-  "planet": { ... },      // Planet visual state
-  "score": { ... },       // Progress and achievements
-  "mood": "...",          // Emotional state
-  "flags": { ... },       // User preferences
-  "logs": [ ... ],        // Audit trail
-  "lastBackup": 0,        // Backup timestamp
-  "created": 0            // Creation timestamp
+```typescript
+type MoodType = "thriving" | "calm" | "recovering" | "growing" | "dormant";
+
+interface CoreStructure {
+  version: 1;           // Schema version for migrations
+  safeMode: boolean;      // Global safety toggle
+  planet: { ... };      // Planet visual state
+  score: { ... };       // Progress and achievements
+  mood: MoodType;           // Emotional state
+  flags: { ... };       // User preferences
+  logs: [ ... ];        // Audit trail
+  lastBackup: 0;        // Backup timestamp
+  created: 0;            // Creation timestamp
 }
 ```
 
@@ -108,7 +105,7 @@ interface ScoreState {
 ### KWGT Formula Integration
 ```
 Evolution Ring Progress: $withmystar_evolution$
-Streak Ring Progress: $withmystar_streak*10$
+Streak Ring Progress: $withmystar_streak*10$ // Multiplied by 10 to scale streak days to a 0-100 range for the progress ring
 Planet Color: $if(withmystar_mood=thriving, #00FFFF, #0080FF)$
 City Visibility: $withmystar_city>=1$
 Label Text: $withmystar_label$
@@ -142,7 +139,7 @@ Safe Mode Opacity: $if(withmystar_safemode=1, 50, 100)$
 | `reset` | `scope` | Reset portions of state |
 
 ### Command Processing Flow
-1. **Watch**: Tasker monitors `/WithMyStar/commands.json`
+1. **Watch**: Tasker monitors `/WithMyStar/commands.json` (typically using a 'File Modified' event or a periodic check)
 2. **Parse**: JSON parsed and validated
 3. **Execute**: Command applied to state
 4. **Log**: Action recorded in audit log
@@ -175,14 +172,14 @@ Safe Mode Opacity: $if(withmystar_safemode=1, 50, 100)$
 │       └── textures/
 ├── logs/
 │   └── debug.txt           // Debug information
-└── commands.json           // Active command (temp)
+└── commands.json           // Active command (temp, cleared after processing)
 ```
 
 ### File Permissions
-- **State files**: 644 (read/write owner, read group/other)
-- **Backup files**: 644 (read/write owner, read group/other)
-- **Command file**: 666 (read/write all - temporary)
-- **Log files**: 644 (read/write owner, read group/other)
+- **State files**: 644 (owner can read/write, group/others can read)
+- **Backup files**: 644 (owner can read/write, group/others can read)
+- **Command file**: 666 (all users can read/write - temporary)
+- **Log files**: 644 (owner can read/write, group/others can read)
 
 ## Integration Patterns
 

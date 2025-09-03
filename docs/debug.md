@@ -5,6 +5,7 @@ This guide provides comprehensive troubleshooting steps for WithMyStar issues an
 ## Quick Diagnostic Commands
 
 ### Check System Status
+These commands are executed via the WithMyStar CLI/API or by sending JSON payloads to the WithMyStar daemon/Tasker.
 ```json
 // Command to get complete system status
 {
@@ -87,7 +88,7 @@ This guide provides comprehensive troubleshooting steps for WithMyStar issues an
    - Check profile last run time
 
 2. **Test Manual Variable Set**:
-   - Set variable manually in Tasker
+   - Set variable manually in Tasker. For example, in Tasker, create a new task, add an 'Action' -> 'Variables' -> 'Variable Set', set 'Name' to `%WITHMYSTAR_TEST` and 'To' to `1`.
    - Use Variable Set action with global variable
    - Check if KWGT updates immediately
 
@@ -121,7 +122,7 @@ This guide provides comprehensive troubleshooting steps for WithMyStar issues an
 
 #### Diagnosis
 1. **Validate JSON Syntax**:
-   - Copy `/WithMyStar/state/current.json` content
+   - Copy `/storage/emulated/0/WithMyStar/state/current.json` content (or your custom installation path)
    - Paste into online JSON validator
    - Look for syntax errors (missing commas, brackets)
 
@@ -218,7 +219,7 @@ This guide provides comprehensive troubleshooting steps for WithMyStar issues an
 
 1. **JSON Structure Validation**:
    ```bash
-   # If you have access to command line tools
+   # If you have access to command line tools (requires jq to be installed on a Linux/macOS environment, or via Termux on Android)
    jq '.' /path/to/current.json
    ```
 
@@ -228,7 +229,7 @@ This guide provides comprehensive troubleshooting steps for WithMyStar issues an
    - Identify corrupted or missing properties
 
 3. **Log Analysis**:
-   - Review audit logs chronologically
+   - Review audit logs chronologically (these are stored within the state file's `logs` array)
    - Look for patterns before issues
    - Identify automated vs manual changes
 
@@ -248,7 +249,7 @@ This guide provides comprehensive troubleshooting steps for WithMyStar issues an
 
 ### Complete System Reset
 
-When all else fails, use this nuclear option:
+When all else fails, use this nuclear option. **Warning: This will delete all WithMyStar data and configurations on your device.**
 
 1. **Backup Current State** (if possible):
    - Copy current.json to safe location

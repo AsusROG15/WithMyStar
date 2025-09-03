@@ -33,7 +33,7 @@ WithMyStar embraces a **cyberpunk visual language** that feels futuristic yet ac
 - **Accent**: Magenta `#FF00FF` - Streak indicators, highlights
 - **Background**: Deep Navy `#001122` - Space background, containers
 
-#### Mood-Based Variations
+#### Mood-Based Variations (These CSS-like variables are conceptual guidelines for KWGT theming or for use in web-based UI components.)
 ```css
 /* Thriving State */
 --primary: #00FFFF;    /* Bright cyan */
@@ -95,9 +95,9 @@ WithMyStar embraces a **cyberpunk visual language** that feels futuristic yet ac
 ```
 
 #### Colorblind-Friendly Alternatives
-- **Deuteranopia**: Use blue/yellow instead of red/green
-- **Protanopia**: Emphasize blue/purple spectrum
-- **Tritanopia**: Focus on red/cyan contrast
+- **Deuteranopia**: Use blue/yellow instead of red/green (e.g., specific palette if defined)
+- **Protanopia**: Emphasize blue/purple spectrum (e.g., specific palette if defined)
+- **Tritanopia**: Focus on red/cyan contrast (e.g., specific palette if defined)
 
 ## Typography
 
@@ -136,7 +136,7 @@ WithMyStar embraces a **cyberpunk visual language** that feels futuristic yet ac
 - **Shadow**: Subtle drop shadow for readability
 - **Outline**: Optional stroke for visibility over varied backgrounds
 
-#### Glowing Text Effects
+#### Glowing Text Effects (This CSS example can be simulated in KWGT using multiple text layers with blur effects.)
 ```css
 /* Cyberpunk glow effect */
 text-shadow: 
@@ -155,7 +155,7 @@ text-shadow:
 - **Border**: Optional thin border in accent color
 - **Shadow**: Subtle drop shadow for depth
 
-#### Planet States
+#### Planet States (These CSS examples are conceptual guidelines for KWGT theming or for use in web-based UI components.)
 ```css
 /* Normal state */
 border-radius: 50%;

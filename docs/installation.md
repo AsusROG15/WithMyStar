@@ -23,8 +23,8 @@ This guide will help you set up WithMyStar on your Android device using the no-c
 4. Grant all necessary permissions when prompted
 
 ### Step 2: Download WithMyStar Files
-1. Download the project files from GitHub
-2. Extract to `/storage/emulated/0/WithMyStar/` (or your preferred location)
+1. Download the project files from the [WithMyStar GitHub repository](https://github.com/WithMyStar/WithMyStar/releases) (or specific release/download page).
+2. Extract to `/storage/emulated/0/WithMyStar/` (or your preferred location). If you choose a different location, ensure you update all relevant paths in Tasker tasks and KWGT formulas accordingly.
 3. Ensure the following structure exists:
    ```
    WithMyStar/
@@ -38,18 +38,18 @@ This guide will help you set up WithMyStar on your Android device using the no-c
 1. Long-press on your home screen → Widgets
 2. Find KWGT and add a 2×2 widget
 3. Tap the widget to enter edit mode
-4. Import the provided `planet_widget.kwgt` file (when available)
+4. Import the provided `planet_widget.kwgt` file from the `kwgt/` directory in the downloaded files.
 5. OR follow the manual setup guide below
 
 ### Step 4: Configure Tasker
 1. Open Tasker and grant accessibility permissions
-2. Import the provided profiles and tasks (when available)
+2. Import the provided profiles and tasks from the `tasker/` directory in the downloaded files.
 3. Enable the "WithMyStar State Manager" profile
 4. Test by manually setting variables
 
 ## Manual Widget Setup
 
-If automated files aren't available yet, create the widget manually:
+If automated files aren't available yet, create the widget manually: (Note: Exact menu names or steps might vary slightly with KWGT updates.)
 
 ### Basic Planet Widget in KWGT
 1. Add a **Circle Shape** (planet base):
@@ -84,8 +84,7 @@ If automated files aren't available yet, create the widget manually:
 
 2. Create **Load State Task**:
    - File → Read File: `/storage/emulated/0/WithMyStar/state/current.json`
-   - Variable Set: Parse JSON and set globals
-   - If file missing: Initialize with default values
+   - Variable Set: Parse JSON and set globals (Requires AutoTools for robust JSON parsing. Use 'AutoTools JSON Read' action.)
 
 3. Create **Save State Task**:
    - Variable Set: Build JSON from globals
@@ -93,7 +92,7 @@ If automated files aren't available yet, create the widget manually:
 
 4. Create **Update Widget Profile**:
    - Context: Variable Set (any WITHMYSTAR variable)
-   - Task: Send variables to KWGT using Send Intent
+   - Task: Send variables to KWGT using Send Intent (Use 'Send Intent' action: Action: `org.kustom.action.UPDATE_WIDGET`, Package: `org.kustom.widget`, Class: `org.kustom.widget.Receiver`)
 
 ## Testing Your Setup
 
@@ -108,7 +107,7 @@ If automated files aren't available yet, create the widget manually:
 3. Check that state file is created/updated
 
 ### Test Safe Mode
-1. Create a quick tile for Safe Mode toggle
+1. Create a quick tile for Safe Mode toggle (This can typically be done in Tasker by creating a task and assigning it to a Quick Settings Tile, or via Android's Quick Settings editor).
 2. Verify it disables animations/motion
 3. Confirm state is preserved
 

@@ -30,7 +30,7 @@ WithMyStar is designed with safety-first principles. This document outlines all 
 **Activation**:
 - Quick tile in Android notification panel
 - Long-press widget → Safe Mode
-- Voice command (if configured)
+- Voice command (if configured, typically via Tasker integration with Google Assistant/Alexa)
 - Tasker scene button
 
 **Safe Mode Effects**:
@@ -79,10 +79,10 @@ WithMyStar is designed with safety-first principles. This document outlines all 
 - **Data Portability**: Export your data anytime
 
 #### Security
-- **State Encryption**: Local state files can be encrypted (optional)
+- **State Encryption**: Local state files can be encrypted (optional, typically enabled via a setting in the app or through a Tasker task)
 - **Backup Integrity**: Checksums verify backup completeness
 - **Access Control**: Tasker permission management
-- **Audit Logs**: Complete history of all state changes
+- **Audit Logs**: Complete history of all state changes (accessible by examining the `logs` array within the state JSON file)
 - **Safe Restoration**: Backups validated before restoration
 
 ### Recovery Mechanisms
@@ -166,7 +166,7 @@ Stop and activate Safe Mode if you experience:
 - **Local Resources**: Contact your local mental health services
 
 ### Community Support
-- **GitHub Discussions**: Ask for help from the community
+- **GitHub Discussions**: Ask for help from the community ([link to GitHub Discussions](https://github.com/WithMyStar/WithMyStar/discussions))
 - **Safety Issues**: Report safety concerns immediately
 - **Feature Requests**: Suggest safety improvements
 - **Documentation**: Help improve safety documentation
@@ -182,8 +182,8 @@ Stop and activate Safe Mode if you experience:
 
 ### How to Report
 1. **GitHub Issues**: Use the "Safety Concern" template
-2. **Direct Contact**: Email project maintainers
-3. **Anonymous Reports**: Use anonymous reporting tools
+2. **Direct Contact**: Email project maintainers (e.g., [maintainer@example.com](mailto:maintainer@example.com) or link to a contact form)
+3. **Anonymous Reports**: Use anonymous reporting tools (e.g., [example anonymous reporting tool](https://example.com/anonymous-report) if applicable)
 4. **Community Discussion**: Raise in GitHub Discussions
 
 ### Response Promise
