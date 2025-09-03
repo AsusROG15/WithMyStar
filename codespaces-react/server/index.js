@@ -58,7 +58,7 @@ app.post('/api/vision', async (req, res) => {
 });
 
 // Google Chat relay route
-app.use('/api/chat', chatRelay);
+// app.use('/api/chat', chatRelay);
 
 // All other GET requests not handled by API routes should return the React app's index.html
 app.get('*', (req, res) => {
