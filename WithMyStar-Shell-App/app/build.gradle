@@ -36,6 +36,7 @@ android {
         implementation "io.noties.markwon:linkify:$markwonVersion"
         implementation "io.noties.markwon:recycler:$markwonVersion"
         implementation "com.google.mediapipe:tasks-genai:0.10.27"
+        implementation "androidx.webkit:webkit:1.8.0"
 
         implementation project(":terminal-view")
         implementation project(":termux-shared")
