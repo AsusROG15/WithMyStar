@@ -29,6 +29,8 @@ app.use(bodyParser.json({ limit: '10mb' }));
 
 // Health check endpoint for CI/CD
 app.get('/api/health', (req, res) => {
+  console.log("Health check endpoint hit!"); // Added for debugging
+  throw new Error("Simulated error in health check!"); // TEMPORARY: To trigger error middleware
   res.json({
     status: 'healthy',
     service: 'WithMyStar Backend',
@@ -57,6 +59,7 @@ app.use('/api/chat', chatRelay);
 
 // Centralized error handling middleware
 app.use((err, req, res, next) => {
+  console.log("An error occurred:", err.message); // Added for debugging
   console.error(err.stack); // Log the error stack for debugging
   res.status(500).send('Something broke!'); // Generic error message for client
 });
