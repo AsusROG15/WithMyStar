@@ -8,6 +8,11 @@ import cors from 'cors'; // Import cors
 import morgan from 'morgan'; // Import morgan
 import { v4 as uuidv4 } from 'uuid';
 import chatRelay from './chatRelay.js';
+import path from 'path'; // Import path module
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(morgan('combined')); // Use morgan for request logging
@@ -24,6 +29,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(bodyParser.json({ limit: '10mb' }));
+
+// Serve static files from the React app's build directory
+app.use(express.static(path.join(__dirname, '../build')));
 
 // Health check endpoint for CI/CD
 app.get('/api/health', (req, res) => {
@@ -51,6 +59,11 @@ app.post('/api/vision', async (req, res) => {
 
 // Google Chat relay route
 app.use('/api/chat', chatRelay);
+
+// All other GET requests not handled by API routes should return the React app's index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
 
 // Centralized error handling middleware
 app.use((err, req, res, next) => {
