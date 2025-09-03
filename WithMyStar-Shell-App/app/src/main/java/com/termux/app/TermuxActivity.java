@@ -58,6 +58,7 @@ import org.withmystar.shell.terminal.TerminalSession;
 import org.withmystar.shell.terminal.TerminalSessionClient;
 import org.withmystar.shell.view.TerminalView;
 import org.withmystar.shell.view.TerminalViewClient;
+import org.withmystar.shell.app.OracleService;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -188,6 +189,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     private static final int CONTEXT_MENU_HELP_ID = 7;
     private static final int CONTEXT_MENU_SETTINGS_ID = 8;
     private static final int CONTEXT_MENU_REPORT_ID = 9;
+    private static final int CONTEXT_MENU_ASK_ORACLE_ID = 12;
 
     private static final String ARG_TERMINAL_TOOLBAR_TEXT_INPUT = "terminal_toolbar_text_input";
     private static final String ARG_ACTIVITY_RECREATED = "activity_recreated";
@@ -648,6 +650,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         menu.add(Menu.NONE, CONTEXT_MENU_HELP_ID, Menu.NONE, R.string.action_open_help);
         menu.add(Menu.NONE, CONTEXT_MENU_SETTINGS_ID, Menu.NONE, R.string.action_open_settings);
         menu.add(Menu.NONE, CONTEXT_MENU_REPORT_ID, Menu.NONE, R.string.action_report_issue);
+        menu.add(Menu.NONE, CONTEXT_MENU_ASK_ORACLE_ID, Menu.NONE, "Ask the Oracle");
     }
 
     /** Hook system menu to show context menu instead. */
@@ -697,6 +700,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                 return true;
             case CONTEXT_MENU_REPORT_ID:
                 mTermuxTerminalViewClient.reportIssueFromTranscript();
+                return true;
+            case CONTEXT_MENU_ASK_ORACLE_ID:
+                askTheOracle();
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -758,6 +764,34 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         }
     }
 
+    private void askTheOracle() {
+        // This should be run in a background thread to avoid blocking the main thread.
+        new Thread(() -> {
+            try {
+                // The model path we used earlier
+                String modelPath = "/data/local/tmp/llm/gemma-2b-it-cpu-int4.bin";
+
+                // Create an instance of our OracleService
+                final OracleService oracle = new OracleService(getApplicationContext(), modelPath);
+
+                // The prompt for the oracle
+                final String prompt = "Write a short story about a robot who discovers music.";
+
+                // Generate a response
+                final String response = oracle.generateResponse(prompt);
+
+                // Log the response to logcat
+                Logger.logInfo(LOG_TAG, "Oracle response: " + response);
+
+                // Show the response in a Toast on the UI thread
+                runOnUiThread(() -> showToast("Oracle says: " + response, true));
+
+            } catch (Exception e) {
+                Logger.logStackTraceWithMessage(LOG_TAG, "Oracle failed to generate a response", e);
+                runOnUiThread(() -> showToast("Oracle failed: " + e.getMessage(), true));
+            }
+        }).start();
+    }
 
 
     /**
