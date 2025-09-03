@@ -4,9 +4,20 @@
 // It sends the user's input to the Tasker system for processing.
 function submitQuery() {
   const query = document.getElementById("queryInput").value;
+  const errorMessageElement = document.getElementById("queryError");
   if (query.trim() === "") {
-    alert("Please enter a query.");
+    if (errorMessageElement) {
+      errorMessageElement.textContent = "Please enter a query.";
+      errorMessageElement.style.color = "red"; // Optional: style the error message
+    } else {
+      console.error("Error: Element with ID 'queryError' not found. Please add it to your HTML.");
+      alert("Please enter a query."); // Fallback if element not found
+    }
     return;
+  } else {
+    if (errorMessageElement) {
+      errorMessageElement.textContent = ""; // Clear error message on valid input
+    }
   }
 
   // Here, we would trigger a Tasker action.
