@@ -1,0 +1,71 @@
+# SLSA Level 3 Build Workflow for WithMyStar
+# Provides cryptographic guarantee of build integrity
+name: SLSA Build and Attestation
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      hashes: ${{ steps.hash.outputs.hashes }}
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+        
+      - name: Run validation
+        run: node validate.cjs
+        
+      - name: Run tests
+        run: ./e2e-test.sh
+        
+      - name: Build application
+        run: npm run build
+        
+      - name: Create build archive
+        run: |
+          cd dist
+          tar -czf ../withmystar-build.tar.gz *
+          cd ..
+          
+      - name: Generate subject for provenance
+        id: hash
+        run: |
+          set -euo pipefail
+          echo "hashes=$(sha256sum withmystar-build.tar.gz main.js | base64 -w0)" >> "${GITHUB_OUTPUT}"
+          
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: withmystar-artifacts
+          path: |
+            withmystar-build.tar.gz
+            main.js
+            index.html
+
+  provenance:
+    needs: [build]
+    permissions:
+      actions: read   # To read the workflow path
+      id-token: write # To sign the provenance
+      contents: write # To add assets to a release
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.9.0
+    with:
+      base64-subjects: "${{ needs.build.outputs.hashes }}"
+      upload-assets: true

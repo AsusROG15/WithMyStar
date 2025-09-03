@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package ritual;
+
+// The service definition for performing rituals.
+service RitualService {
+  // Performs a ritual and returns the result.
+  rpc PerformRitual(RitualRequest) returns (RitualResponse) {}
+  // Synchronizes planet traits with the client.
+  rpc SyncTraits(SyncTraitsRequest) returns (RitualResponse) {}
+  // Generates a new age keypair.
+  rpc GenerateKeyPair(GenerateKeyPairRequest) returns (GenerateKeyPairResponse) {}
+}
+
+// The request message containing the ritual details.
+message RitualRequest {
+  string name = 1;
+  repeated string args = 2;
+}
+
+// The response message containing the result of the ritual.
+message RitualResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Represents a single planet trait.
+message Trait {
+  string name = 1;
+  string value = 2;
+}
+
+// The request message for synchronizing traits.
+message SyncTraitsRequest {
+  repeated Trait traits = 1;
+}
+
+// The request message for generating a keypair.
+message GenerateKeyPairRequest {}
+
+// The response message for generating a keypair.
+message GenerateKeyPairResponse {
+  string public_key = 1;
+}

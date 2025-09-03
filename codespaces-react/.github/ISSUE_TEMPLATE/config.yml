@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussion Forum
+    url: https://github.com/AsusROG15/codespaces-react/discussions
+    about: Ask questions and discuss ideas about WithMyStar
+  - name: 📚 Documentation
+    url: https://github.com/AsusROG15/codespaces-react/blob/main/README.md
+    about: Read the project documentation and setup guides
+  - name: 🔒 Security Issues
+    url: https://github.com/AsusROG15/codespaces-react/security/advisories
+    about: Report security vulnerabilities privately

@@ -1,0 +1,9 @@
+Origin: WithMyStar
+Label: WithMyStar Shell
+Suite: stable
+Version: 1.0
+Codename: blessed
+Date: Sun, 31 Aug 2025 23:12:02 +0000
+Architectures: all
+Components: main
+Description: WithMyStar blessed packages
