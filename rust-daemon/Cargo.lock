@@ -339,6 +339,7 @@ name = "daemon"
 version = "0.1.0"
 dependencies = [
  "age",
+ "anyhow",
  "env_logger",
  "log",
  "prost",
