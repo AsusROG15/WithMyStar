@@ -11,6 +11,36 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        console.error('Service Worker registration failed:', error);
+      });
+  });
+}
+
+// Web Worker Initialization
+let worker;
+if (window.Worker) {
+  worker = new Worker('/worker.js');
+  worker.onmessage = function(e) {
+    const result = `Result for: <strong>${e.data.result}</strong>`;
+    elements.results.innerHTML = result;
+    addToHistory(result);
+    setLoading(false);
+  };
+  worker.onerror = function(error) {
+    console.error('Worker error:', error);
+    showError(ERROR_MESSAGES.generic);
+    setLoading(false);
+  };
+}
+
 // withmystar-ui.js
 // Display settings optimization: theme, font, accessibility
 
@@ -109,14 +139,20 @@ async function handleQuery() {
   if (!validateInput()) return;
   setLoading(true);
   try {
-    await new Promise(res => setTimeout(res, 800));
-    const result = `Result for: <strong>${elements.queryInput.value}</strong>`;
-    elements.results.innerHTML = result;
-    addToHistory(result);
+    if (worker) {
+      worker.postMessage({ query: elements.queryInput.value });
+    } else {
+      // Fallback if Web Workers are not supported or initialized
+      await new Promise(res => setTimeout(res, 800));
+      const result = `Result for: <strong>${elements.queryInput.value}</strong>`;
+      elements.results.innerHTML = result;
+      addToHistory(result);
+      setLoading(false);
+    }
   } catch (err) {
     showError(ERROR_MESSAGES.generic);
   } finally {
-    setLoading(false);
+    // setLoading(false); // Moved inside worker.onmessage or fallback
   }
 }
 

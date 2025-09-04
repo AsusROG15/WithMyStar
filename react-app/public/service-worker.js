@@ -3,8 +3,7 @@ const CACHE_NAME = 'withmystar-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/assets/index-DeOKtZg_.js', // Example of a built asset, will need to be dynamic
-  // Add other static assets like CSS, images, etc.
+  // Built assets will be handled by the cache-first, then network strategy
 ];
 
 self.addEventListener('install', (event) => {
@@ -25,7 +24,25 @@ self.addEventListener('fetch', (event) => {
         if (response) {
           return response;
         }
-        return fetch(event.request);
+        // Not in cache, go to network, then cache the response
+        return fetch(event.request)
+          .then(response => {
+            // Check if we received a valid response
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+            // IMPORTANT: Clone the response. A response is a stream
+            // and can only be consumed once. We must clone it so that
+            // the browser can consume the original response and we can
+            // consume the clone. If we don't clone it, the browser
+            // will not receive the response.
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              });
+            return response;
+          });
       })
   );
 });
