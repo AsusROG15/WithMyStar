@@ -11,6 +11,32 @@ root.render(
   </React.StrictMode>
 );
 
+// Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        console.error('Service Worker registration failed:', error);
+      });
+  });
+}
+
+// Web Worker Initialization (simplified for direct integration)
+let worker;
+if (window.Worker) {
+  worker = new Worker('/worker.js');
+  worker.onmessage = function(e) {
+    console.log('Message from worker:', e.data.result);
+    // You would typically update React state here, not direct DOM manipulation
+  };
+  worker.onerror = function(error) {
+    console.error('Worker error:', error);
+  };
+}
+
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
